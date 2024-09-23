@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2048游戏</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #e0f2f1; /* 蓝绿色调背景 */
+        }
+        .container {
+            text-align: center;
+        }
+        h1 {
+            font-size: 48px;
+            color: #00796b; /* 深蓝绿色标题 */
+        }
+        #game-board {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            grid-gap: 5px; /* 减小间隔，使分隔线更细 */
+            width: 400px;
+            height: 400px;
+            background-color: #4db6ac; /* 蓝绿色游戏板 */
+            border-radius: 5px;
+            padding: 5px; /* 减小内边距，与grid-gap保持一致 */
+            margin-bottom: 20px;
+            user-select: none; /* 防止拖动时选中文本 */
+        }
+        .tile {
+            width: 90px; /* 调整瓷砖大小以适应新的间隔 */
+            height: 90px;
+            background-color: #b2dfdb; /* 浅蓝绿色瓷砖 */
+            border-radius: 3px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 36px;
+            font-weight: bold;
+            color: #004d40; /* 深蓝绿色文字 */
+        }
+        #new-game {
+            padding: 10px 20px;
+            font-size: 18px;
+            background-color: #00897b; /* 蓝绿色按钮 */
+            color: white;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+        #new-game:hover {
+            background-color: #00796b;
+        }
+        .score-container {
+            display: flex;
+            justify-content: space-around;
+            margin-bottom: 20px;
+        }
+        .score-box {
+            background-color: #4db6ac;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-size: 18px;
+        }
+        #instructions {
+            max-width: 400px;
+            margin: 20px auto;
+            text-align: left;
+            color: #00796b;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        /* 添加模态框样式 */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.4);
+        }
+
+        .modal-content {
+            background-color: #e0f2f1;
+            margin: 15% auto;
+            padding: 20px;
+            border: 1px solid #4db6ac;
+            border-radius: 5px;
+            width: 300px;
+            text-align: center;
+        }
+
+        .modal-content h2 {
+            color: #00796b;
+            margin-top: 0;
+        }
+
+        .modal-content p {
+            color: #004d40;
+            font-size: 18px;
+        }
+
+        .close-button {
+            background-color: #00897b;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .close-button:hover {
+            background-color: #00796b;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>2048</h1>
+        <div class="score-container">
+            <div class="score-box" id="score">分数: 0</div>
+            <div class="score-box" id="best-score">最高分: 0</div>
+        </div>
+        <div id="game-board"></div>
+        <button id="new-game">新游戏</button>
+        <div id="instructions">
+            <h3>游戏说明：</h3>
+            <p>1. 使用键盘方向键或鼠标拖动来移动方块。</p>
+            <p>2. 相同数字的方块相撞时会合并。</p>
+            <p>3. 每次合并，得分增加合并后方块的数值。</p>
+            <p>4. 当无法移动时游戏结束。</p>
+            <p>5. 尝试获得2048方块并达到最高分！</p>
+        </div>
+    </div>
+
+    <!-- 添加模态框 -->
+    <div id="gameOverModal" class="modal">
+        <div class="modal-content">
+            <h2>游戏结束</h2>
+            <p id="finalScore"></p>
+            <button class="close-button" onclick="closeModal()">关闭</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
